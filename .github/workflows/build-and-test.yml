@@ -1,10 +1,7 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - main
-      - ci
+on: [push]
+
 jobs:
   # Prime a single LFS cache and expose the exact key for the matrix
   WarmLFS:
@@ -247,7 +244,7 @@ jobs:
         run: |
           $date = Get-Date -Format "yyyy.MM.dd"
           $buildNumber = "${{ github.run_number }}"
-          $version = "$date-mc.$buildNumber"
+          $version = if ($env:GITHUB_REF -eq 'refs/heads/main') { "$date-mc.$buildNumber" } else { $branchName = $env:GITHUB_REF -replace 'refs/heads/', ''; "$date-$branchName.$buildNumber" }
           echo "version=$version" >> $env:GITHUB_OUTPUT
           echo "Computed version: $version"
 
