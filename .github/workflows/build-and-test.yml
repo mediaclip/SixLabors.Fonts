@@ -242,7 +242,7 @@ jobs:
         id: compute-version
         shell: pwsh
         run: |
-          $date = Get-Date -Format "yyyy.MM.dd"
+          $date = Get-Date -Format "yyyy.M.d"
           $buildNumber = "${{ github.run_number }}"
           $version = if ($env:GITHUB_REF -eq 'refs/heads/main') { "$date-mc.$buildNumber" } else { $branchName = $env:GITHUB_REF -replace 'refs/heads/', ''; "$date-$branchName.$buildNumber" }
           echo "version=$version" >> $env:GITHUB_OUTPUT
